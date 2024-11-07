@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delizia Pizza</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h3>Delizia Pizza</h3>
+            <!-- <img src="img/pizza-logo.png" alt="Delizia Pizza Logo" class="logo"> -->
+            <button id="theme-toggle" aria-label="Toggle Theme">
+                <span class="icon-whole">🍕</span>
+                <span class="icon-slice" style="transform: rotate(180deg) scale(0);">🍕</span>
+            </button>
+            <h1 class="header-title">Welcome to Delizia Pizza</h1>
+            <p class="header-description">Fresh, Authentic Italian Pizza Delivered to You! Discover our menu with a variety of classic and gourmet options, including vegan choices.</p>
+          
+            <a href="https://anjibarik.github.io/do/#/BookList/3" class="header-button-link">
+                <button class="header-button">GET FIRST DIBS!</button>
+            </a>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="img/inst.png" alt="inst"></a>
+                <a href="#" class="social-icon"><img src="img/face.png" alt="face"></a>
+                <a href="#" class="social-icon"><img src="img/tik.png" alt="tik"></a>
+                <a href="#" class="social-icon"><img src="img/you.png" alt="youtube"></a>
+            </div>
+        </div>
+        <a href="#section1" class="see-more-button">See More</a>       
+    </header> 
+  
+
+    <!-- Desktop Navigation Bar -->
+    <nav id="desktop-nav" class="desktop-nav">
+        <a href="#section1">Home</a>
+        <a href="#section2">Menu</a>
+        <a href="#section3">Recipes</a>   
+        <a href="#section4">Contact Us</a>
+    </nav>
+
+    <button id="nav-toggle-button">☰</button>
+
+
+
+    <!-- Mobile Floating Circular Navigation -->
+    <div class="mobile-float-nav">
+        <div class="center-circle">▲</div>
+        <div class="nav-segment" data-target="section2">Menu</div>
+        <div class="nav-segment" data-target="section3">Recipes</div>
+        <div class="nav-segment" data-target="section4">Contact</div>
+    </div>
+
+    
+      <!-- Pizza Banner Section -->
+<section class="pizza-banner">
+    <div class="pizza-background"></div>
+    <div class="cheese"><img src="img/ciz.png" alt="animation"></div>
+    <div class="cloud tomato tomato1"><img src="img/tomato.png" alt="animation"></div>
+    <div class="cloud tomato tomato2"><img src="img/perez.png" alt="animation"></div>
+    <div class="cloud tomato tomato3"><img src="img/tomato.png" alt="animation"></div>
+    <div class="cloud tomato tomato4"><img src="img/perez.png" alt="animation"></div>    
+    <div class="cloud mushroom mushroom1"><img src="img/mushroom.png" alt="animation"></div>
+    <div class="cloud mushroom mushroom2"><img src="img/mushroom.png" alt="animation"></div>
+    <div class="cloud mushroom mushroom3"><img src="img/mushroom.png" alt="animation"></div>  
+  </section>
+
+    <!-- Main Banner -->
+    <section id="section1" class="main-banner">
+        <h1>🍕 Fresh, Authentic Italian Pizza Delivered to You!</h1>
+        <p>Discover our menu with a variety of classic and gourmet options, including vegan choices.</p>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="section2" class="menu">
+        <h2>🍽️ Our Menu</h2>
+        <div class="menu-item">
+            <h3>Margherita Pizza (Medium & Large)</h3>
+            <p>Classic pizza with fresh tomatoes, mozzarella, and basil.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Pepperoni Pizza (Medium & Large)</h3>
+            <p>Loaded with pepperoni and mozzarella, a customer favorite.</p>
+        </div>
+        <div class="menu-item">
+            <h3>Vegan Supreme (Medium & Large)</h3>
+            <p>Plant-based cheese, mixed vegetables, and a hint of Italian spices.</p>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section id="section3" class="recipes">
+        <h2>🍳 Pizza Recipes</h2>
+        <div class="recipe-item">
+            <h3>Classic Margherita Recipe</h3>
+            <p>A simple, fresh Margherita recipe with easy-to-follow steps. Perfect for beginners!</p>
+            <img src="img/pizza1.jpg" alt="Margherita Pizza">
+            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
+        </div>
+        <div class="recipe-item">
+            <h3>Rustic Pepperoni Recipe</h3>
+            <p>Learn to make the perfect pepperoni pizza with our special sauce blend.</p>
+            <img src="img/pizza2.jpg" alt="Pepperoni Pizza">
+            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
+        </div>
+        <div class="recipe-item">
+            <h3>Vegan Delight Recipe</h3>
+            <p>Create a delicious, plant-based pizza with colorful vegetables and vegan cheese.</p>
+            <img src="img/pizzafon.jpg" alt="Vegan Pizza">
+            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="section4" class="contact">
+        <h2>📞 Contact Us</h2>
+        <p>Email: contact@deliziapizza.com</p>
+        <p>Follow us on YouTube for more recipes: <a href="https://youtube.com/deliziapizza">Delizia Pizza</a></p>
+    </section>
+
+      <!-- Contact Form Section -->
+<section id="section10" class="contact-form-section">
+    <h2>Contact Me</h2>
+    <form id="contactForm">
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        
+        <button type="submit" id="submitBtn" disabled>Send Message</button>
+        <p id="formResponse"></p>
+    </form>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>Delizia Pizza © 2025</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Theme Toggle -->
+    <script src="scripts.js"></script>
+</body>
+</html>
