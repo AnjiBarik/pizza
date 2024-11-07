@@ -638,11 +638,11 @@ img {
 
 
 /* Основной стиль контейнера меню */
-#section2 {
+#section2, #section1, #section4 {
     padding: 20px;
     max-width: 1200px;
     margin: auto;
-}
+} 
 
 /* Сетка для элементов меню */
 .menu-item {
