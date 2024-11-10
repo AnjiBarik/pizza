@@ -1,150 +1,145 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delizia Pizza</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Site for Books</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <h3>Delizia Pizza</h3>
-            <!-- <img src="img/pizza-logo.png" alt="Delizia Pizza Logo" class="logo"> -->
-            <button id="theme-toggle" aria-label="Toggle Theme">
-                <span class="icon-whole">🍕</span>
-                <span class="icon-slice" style="transform: rotate(180deg) scale(0);">🍕</span>
-            </button>
-            <h1 class="header-title">Welcome to Delizia Pizza</h1>
-            <p class="header-description">Fresh, Authentic Italian Pizza Delivered to You! Discover our menu with a variety of classic and gourmet options, including vegan choices.</p>
-          
-            <a href="https://anjibarik.github.io/do/#/BookList/3" class="header-button-link">
-                <button class="header-button">GET FIRST DIBS!</button>
-            </a>
-            
-            <div class="social-icons">
-                <a href="#" class="social-icon"><img src="img/inst.png" alt="inst"></a>
-                <a href="#" class="social-icon"><img src="img/face.png" alt="face"></a>
-                <a href="#" class="social-icon"><img src="img/tik.png" alt="tik"></a>
-                <a href="#" class="social-icon"><img src="img/you.png" alt="youtube"></a>
-            </div>
-        </div>
-        <a href="#section1" class="see-more-button">See More</a>       
-    </header> 
-  
+ 
+<!-- Header -->
+<header>
+  <div class="header-container">
+      <img src="img/logo.png" alt="eMarc Logo" class="logo">           
+      <button id="theme-toggle" aria-label="Toggle Theme">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+      </button>
+  </div>
+</header>
 
-    <!-- Desktop Navigation Bar -->
-    <nav id="desktop-nav" class="desktop-nav">
-        <a href="#section1">Home</a>
-        <a href="#section2">Menu</a>
-        <a href="#section3">Recipes</a>   
-        <a href="#section4">Contact Us</a>
-    </nav>
-
-    <button id="nav-toggle-button">☰</button>
-
-
-
-    <!-- Mobile Floating Circular Navigation -->
-    <div class="mobile-float-nav">
-        <div class="center-circle">▲</div>
-        <div class="nav-segment" data-target="section2">Menu</div>
-        <div class="nav-segment" data-target="section3">Recipes</div>
-        <div class="nav-segment" data-target="section4">Contact</div>
-    </div>
-
+<section class="header" id="main-header">
+  <div class="header-content">
+      <h3>Delizia Pizza</h3>        
+      <h1 class="header-title">Welcome to Delizia Pizza</h1>
+      <p class="header-description">Fresh, Authentic Italian Pizza Delivered to You! Discover our menu with a variety of classic and gourmet options, including vegan choices.</p>
     
-      <!-- Pizza Banner Section -->
-<section class="pizza-banner">
-    <div class="pizza-background"></div>
-    <div class="cheese"><img src="img/ciz.png" alt="animation"></div>
-    <div class="cloud tomato tomato1"><img src="img/tomato.png" alt="animation"></div>
-    <div class="cloud tomato tomato2"><img src="img/perez.png" alt="animation"></div>
-    <div class="cloud tomato tomato3"><img src="img/tomato.png" alt="animation"></div>
-    <div class="cloud tomato tomato4"><img src="img/perez.png" alt="animation"></div>    
-    <div class="cloud mushroom mushroom1"><img src="img/mushroom.png" alt="animation"></div>
-    <div class="cloud mushroom mushroom2"><img src="img/mushroom.png" alt="animation"></div>
-    <div class="cloud mushroom mushroom3"><img src="img/mushroom.png" alt="animation"></div>  
-  </section>
-
-    <!-- Main Banner -->
-    <section id="section1" class="main-banner">
-        <h1>🍕 Fresh, Authentic Italian Pizza Delivered to You!</h1>
-        <p>Discover our menu with a variety of classic and gourmet options, including vegan choices.</p>
-    </section>
-
-    <!-- Menu Section -->
-    <section id="section2" class="menu">
-        <h2>🍽️ Our Menu</h2>
-        <div class="menu-item">
-            <h3>Margherita Pizza (Medium & Large)</h3>
-            <p>Classic pizza with fresh tomatoes, mozzarella, and basil.</p>
-        </div>
-        <div class="menu-item">
-            <h3>Pepperoni Pizza (Medium & Large)</h3>
-            <p>Loaded with pepperoni and mozzarella, a customer favorite.</p>
-        </div>
-        <div class="menu-item">
-            <h3>Vegan Supreme (Medium & Large)</h3>
-            <p>Plant-based cheese, mixed vegetables, and a hint of Italian spices.</p>
-        </div>
-    </section>
-
-    <!-- Recipes Section -->
-    <section id="section3" class="recipes">
-        <h2>🍳 Pizza Recipes</h2>
-        <div class="recipe-item">
-            <h3>Classic Margherita Recipe</h3>
-            <p>A simple, fresh Margherita recipe with easy-to-follow steps. Perfect for beginners!</p>
-            <img src="img/pizza1.jpg" alt="Margherita Pizza">
-            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
-        </div>
-        <div class="recipe-item">
-            <h3>Rustic Pepperoni Recipe</h3>
-            <p>Learn to make the perfect pepperoni pizza with our special sauce blend.</p>
-            <img src="img/pizza2.jpg" alt="Pepperoni Pizza">
-            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
-        </div>
-        <div class="recipe-item">
-            <h3>Vegan Delight Recipe</h3>
-            <p>Create a delicious, plant-based pizza with colorful vegetables and vegan cheese.</p>
-            <img src="img/pizzafon.jpg" alt="Vegan Pizza">
-            <a href="https://anjibarik.github.io/do/#/BookList/3" class="see-more-button go">Order</a>  
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="section4" class="contact">
-        <h2>📞 Contact Us</h2>
-        <p>Email: contact@deliziapizza.com</p>
-        <p>Follow us on YouTube for more recipes: <a href="https://youtube.com/deliziapizza">Delizia Pizza</a></p>
-    </section>
-
-      <!-- Contact Form Section -->
-<section id="section10" class="contact-form-section">
-    <h2>Contact Me</h2>
-    <form id="contactForm">
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        
-        <button type="submit" id="submitBtn" disabled>Send Message</button>
-        <p id="formResponse"></p>
-    </form>
+      <a href="https://anjibarik.github.io/do/#/BookList/3" class="header-button-link" id="main-button">
+          <button class="header-button">GET FIRST DIBS!</button>
+      </a>
+      
+      <div class="social-icons">
+          <a href="#" class="social-icon"><img src="img/inst.png" alt="inst"></a>
+          <a href="#" class="social-icon"><img src="img/face.png" alt="face"></a>
+          <a href="#" class="social-icon"><img src="img/tik.png" alt="tik"></a>
+          <a href="#" class="social-icon"><img src="img/you.png" alt="youtube"></a>
+      </div>
+  </div>
+  <a href="#" id="see-more-btn" class="see-more-button">🛒View catalog</a>       
 </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <p>Delizia Pizza © 2025</p>
-        </div>
-    </footer>
 
-    <!-- JavaScript for Theme Toggle -->
-    <script src="scripts.js"></script>
+
+  <!-- Loading spinner -->
+  <div id="loading-spinner" class="spinner"></div>
+
+  <!-- Sorting panel -->
+  <section class="filters">
+    <input type="text" id="search-input" placeholder="🔍Search by ID or title" class="search-input" />
+  <button id="clear-search-btn" class="clear-search-btn" onclick="clearSearch()">❌</button>
+  <button class="sort-button" onclick="sortBy('new')"><img class="social-icon" src="img/new.png" alt="sort_by_new"></button>
+    <button class="sort-button" onclick="sortBy('popular')"><img class="social-icon" src="img/popular.png" alt="favorite"></button>
+    <button class="sort-button" onclick="sortBy('sale')"><img class="social-icon" src="img/discont.png" alt="discont"></button>
+    <button class="sort-button" onclick="sortByPrice('low')"><img class="social-icon" src="img/up_sort.png" alt="up_sort"></button>
+    <button class="sort-button" onclick="sortByPrice('high')"><img class="social-icon" src="img/down_sort.png" alt="down_sort"></button>
+  </section>
+
+  <!-- Book Card Container -->
+  <section id="book-list" class="book-list"></section>
+
+  
+
+  <!-- Modal window -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <div class="id-rating">
+       <div id="book-ID" class="book-id"></div>
+       <span class="rating-stars" id="book-rating" ></span>
+      </div>
+      <h2 class="book-name id="book-title"></h2>
+     
+      <img id="book-modal-img" src="" alt="Book Image" />
+      <button id="fullscreen-btn" class="fullscreen-icon">🔍</button>
+     
+    
+      
+      <div id="image-gallery" class="image-gallery">
+        
+      </div>
+      <p id="book-description"></p>
+      <p id="book-author"></p>
+      <p class="book-price" id="book-price"></p>
+      <p id="book-tags"></p>     
+    </div>
+  </div>
+
+  <!-- Floating up arrow button -->
+<button id="scroll-to-top-btn" class="scroll-to-top-btn">
+  ⬆️
+</button>
+
+
+  <footer class="footer">
+    <div class="footer-content">
+         <!-- Logo Section -->
+         <div class="logo-section">
+          <img src="img/mainlogo.png" alt="Company Logo" class="footer-logo">
+          <p>Development, Customization, and Promotion</p>
+          <a href="https://anjibarik.github.io/" target="_blank" rel="noopener" class="footer-link">Visit our site</a>
+        </div>
+        <div class="about-section">
+            <h3>About Us</h3>
+            <p>We are a company focused on providing the best services for you. Our mission is to improve your experience through innovation and care.</p>
+        </div>
+        <div>
+        <div class="social-icons">
+         
+            <a href="#" class="social-icon"><img src="img/inst.png" alt="Instagram"></a>
+            <a href="#" class="social-icon"><img src="img/face.png" alt="Facebook"></a>
+            <a href="#" class="social-icon"><img src="img/tik.png" alt="TikTok"></a>
+            <a href="#" class="social-icon"><img src="img/you.png" alt="YouTube"></a>
+          </div> 
+            <!-- Contact Information -->
+             <div class="contact-info">
+              <p><a href="tel:+1234567890">Phone: +1 (234) 567-890</a></p>
+              <p><a href="mailto:info@company.com">Email: info@company.com</a></p>
+              <p><a href="https://maps.google.com/?q=1234+Imaginary+St,+Imaginetown" target="_blank" rel="noopener">Address: 1234 Imaginary St, Imaginetown</a></p>
+             </div>
+        </div>
+        <div class="contact-section">
+            <h3>Contact Us</h3>
+            <button class="contact-toggle">+ Show Contact Form</button>
+            <div class="contact-form-section" style="display: none;">
+                <h4>Contact Me</h4>
+                <form id="contactForm">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit" id="submitBtn" disabled>Send Message</button>
+                    <p id="formResponse"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</footer>
+
+  <!-- Script for data processing -->
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,788 +1,759 @@
-:root {    
-    --header-bg: #f0f0f0;
-    --background: #f5f5f5;
-    --text: #333;
-    --button-bg: #008cba;
-    --button-text: #ffffff;
-    --italy-green: #008c45;
-    --italy-white: #ffffff;
-    --italy-red: #cd212a;
-    --italy-black: #121212;
+
+  .spinner {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* Adjusts for the actual element dimensions */
+    font-size: 40px;
+  }
+  
+  .spinner::after {
+    content: "😺";
+    display: inline-block;
+    animation: tailWag 1s infinite linear; /* Smooth linear rotation */
+  }
+  
+  @keyframes tailWag {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
     
-    /* Кнопка переключения темы */
-    --button-background-light: var(--italy-green);
-    --button-color-light: var(--italy-white);
-    --button-background-dark: var(--italy-black);
-    --button-color-dark: var(--italy-white);
-    
-    /* Основные стили для темной и светлой темы */
-    --main-bg-light: #f9f1e7; /* Нежный кремовый оттенок */
-    --main-bg-dark: #2c2c2c; /* Темный фон для темной темы */
-    --text-light: #333333;
-    --text-dark: #ece5d7; /* Теплый бежевый для текста */
-    --accent-color-light: #ff5e57; /* Красный оттенок для светлой темы */
-    --accent-color-dark: #ff8e72; /* Оранжевый оттенок для темной темы */
-    --accent-green: #4caf50; /* Итальянский зеленый */
+  /* Book Card Styles */
+  .book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;   
+    padding: 5px;
+  }
+  
+  .shelf-element {   
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    padding: 5px;
+  }
+  
+  .shelf-element:hover {
+    transform: scale(1.01);
+  }
+  
+  .img-container img {
+    height: 320px;
+    object-fit: cover;    
+    width: 300px;
+    border-radius: 7px;
+  }
+  
+  .book-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px;
+    text-align: center;
+  }
+  
+  .book-price {
+    text-align: center;
+    margin: 5px;
+    color: #007bff;
+    font-size: 1.1em;
+  }
+  
+  /* Filter styles */
+  .filters {
+    display: flex;   
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .sort-button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin: 5px;
+  }  
+
+  .sort-button:hover {
+    background: linear-gradient(45deg, #E6E6E6, #C0C0C0, #A8A8A8, #E6E6E6);
+    color: white; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  
+  /* Adaptability */
+  @media (max-width: 400px) {
+    .shelf-element {
+      max-width: 100%;
+    }
+  }
+
+  
+  /* Modal Window Styles */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);    
+  }
+  
+  .modal-content { 
+    background-color: var(--modal-bg);
+    color: var(--modal-text);   
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    margin: 5% 0 5% auto;
+    border-radius: 7px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* "More details" button */
+  .show-more-btn {
+    background-color: #1b7b28;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    font-size: 16px;
+  }
+  
+  .show-more-btn:hover {
+    background: linear-gradient(45deg, #32CD32, #228B22); 
+    color: white;
+    transition: background 0.3s ease;
+  }
+  
+.modal-content #book-modal-img {
+  height: 320px;
+  object-fit: cover;
+  width: 300px;
+  border-radius: 7px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .image-option {
+    max-width: 100px; 
+    max-height: 100px;
+    height: 70px;
+    margin: 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: transform 0.2s;
+  } 
+  
+  .image-option:hover {
+    transform: scale(1.1);
+  }
+
+  /* Basic Image Gallery Style */
+  .image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  /* Style for the background and fullscreen container */
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-/* Определение темы */
+/* Style for full screen image */
+.fullscreen-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Style for the close full screen button */
+.close-fullscreen {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  color: #333;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px 15px;
+}
+
+.close-fullscreen:hover {
+  background-color: #ccc;
+}
+
+/* Style for the full screen button */
+.fullscreen-icon { 
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); 
+}
+
+.fullscreen-icon:hover {
+  background-color: #fff;
+    color: #333;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 10px 15px;
+}
+
+.book-id {
+  font-weight: bold;  
+}
+
+.id-rating {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1px;
+}
+
+p#book-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.search-input {
+  padding: 8px;
+  font-size: 14px;  
+  border-radius: 7px;
+  border: 1px solid;
+  margin: 5px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.clear-search-btn {    
+    background-color: #f1f1f1;    
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px 4px;
+    border: none;
+}
+
+.clear-search-btn:hover {
+  background-color: #ddd;
+}
+
+
+.rating-stars{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+}
+.star {
+  font-size: 20px;
+  color: #ccc; 
+}
+
+.star.filled {
+  color: #ffd700; 
+}
+
+.star.half-filled {
+  color: #ffd700; 
+}
+
+.review-count {
+  font-size: 16px;
+  margin-left: 5px;  
+}
+
+.review-count::before {
+  content: "💬";
+  margin-right: 5px;
+}
+
+.filters {
+  display: none; 
+}
+
+/* Basic Styles */
+:root {
+  --header-bg: #f5f5f5;
+  --background: #f0f0f0;
+  --text: #333333;
+  --button-bg: #008cba;
+  --button-text: #ffffff;
+  --modal-bg: #fefefe; /* Add a variable for modal background */
+   --modal-text: #333333;
+}
+
 [data-theme="dark"] {
-    --header-bg: #333;
-    --background: var(--main-bg-dark);
-    --text: rgba(202, 198, 191, 0.87);
-    --button-bg: #444;
-    --button-text: #f5f5f5;
-
-    /* Переменные для кнопки переключения темы */
-    --button-background: var(--button-background-dark);
-    --button-color: var(--button-color-dark);
-}
-
-[data-theme="light"] {
-    --background: var(--main-bg-light);
-    --text: var(--text-light);
-
-    /* Переменные для кнопки переключения темы */
-    --button-background: var(--button-background-light);
-    --button-color: var(--button-color-light);
+  --header-bg: #333333;
+  --background: #121212;
+  --text: rgba(202, 198, 191, 0.87);
+  --button-bg: #444444;
+  --button-text: #f5f5f5;
+  --modal-bg: #333333; /* Dark theme modal background */
+  --modal-text: rgba(202, 198, 191, 0.87);
 }
 
 body {
-    background-color: var(--background);
-    color: var(--text);
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.5s ease, color 0.5s ease;
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  padding: 10px;
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  text-align: center;
 }
 
-/* Заголовок */
-.header-container {
-    background-color: var(--italy-green);
-    color: var(--italy-white);
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-}
-
-/* Навигация и Футер */
-.desktop-nav, .footer-container {
-    background-color: var(--italy-red);
-    color: var(--italy-white);
-}
-
-/* Кнопка переключения темы */
 #theme-toggle {
-    background: var(--button-background);
-    color: var(--button-color);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
 }
 
-.icon-whole, .icon-slice {
-    position: absolute;
-    transition: transform 0.5s ease-in-out;
+#theme-toggle .icon-sun,
+#theme-toggle .icon-moon {
+  position: absolute;
+  transition: transform 0.5s ease;
 }
 
-.icon-whole {
-    transform: scale(1) rotate(0deg);
+#theme-toggle .icon-sun {
+  transform: rotate(0deg) scale(1);
 }
 
-.icon-slice {
-    transform: scale(0) rotate(180deg);
+#theme-toggle .icon-moon {
+  transform: rotate(180deg) scale(0);
 }
 
-[data-theme="dark"] .icon-whole {
-    transform: scale(0) rotate(-180deg);
+[data-theme="dark"] #theme-toggle .icon-sun {
+  transform: rotate(-180deg) scale(0);
 }
 
-[data-theme="dark"] .icon-slice {
-    transform: scale(1) rotate(0deg);
+[data-theme="dark"] #theme-toggle .icon-moon {
+  transform: rotate(0deg) scale(1);
 }
 
-/* Баннер */
-.main-banner {
-    background: linear-gradient(145deg, var(--accent-color), var(--accent-green));
-    color: var(--text);
-    padding: 50px 20px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-    animation: bannerFadeIn 1.5s ease forwards;
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: var(--header-bg);
+  border-radius: 15px;
+  margin-bottom: 5px;
 }
 
-.main-banner h1 {
-    font-size: 2.8em;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.main-banner p {
-    font-size: 1.2em;
-    margin-top: 10px;
-}
-
-@keyframes bannerFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Основные стили для блоков */
-.main-banner,
-.menu,
-.recipes,
-.contact {
-    margin: 20px;
-    padding: 30px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    -webkit-backdrop-filter: blur(5px); /* Поддержка для Safari */
-    backdrop-filter: blur(5px);
-    transition: background 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Темная тема - блоки */
-[data-theme="dark"] .main-banner,
-[data-theme="dark"] .menu,
-[data-theme="dark"] .recipes,
-[data-theme="dark"] .contact {
-    background: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.1);
-}
-
-/* Эффект при наведении для блоков */
-.main-banner:hover,
-.menu:hover,
-.recipes:hover,
-.contact:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.9);
-}
-
-/* Темная тема - эффект при наведении */
-[data-theme="dark"] .main-banner:hover,
-[data-theme="dark"] .menu:hover,
-[data-theme="dark"] .recipes:hover,
-[data-theme="dark"] .contact:hover {
-    background: rgba(25, 25, 25, 0.8);
-    box-shadow: 0px 8px 20px rgba(255, 255, 255, 0.2);
-}
-
-/* Навигация */
-/* Desktop Nav */
-
-.desktop-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background: #333;
-    padding: 10px 0;
-    width: 100%;
-    opacity: 0.8;
-}
-
-.desktop-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.desktop-nav a:hover {
-    background: #555;
-}
-
-/* Fixed Position Styling */
-.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-}
-
-/* Mobile Nav */
-.mobile-float-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;    
-    width: 100px;
-    height: 100px;  
-    background-image: url('img/pizza1.jpg');
-    background-size: cover;
-    border-radius: 50%;
-    z-index: 10;
-    padding: 10px;
-    opacity: 0.8;
-    visibility: visible;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-#nav-toggle-button {
-    position: fixed;   
-    right: 20px;
-    transform: translateY(-50%);
-    background: #444;
-    color: #fff;    
-    cursor: pointer;
-    z-index: 100;
-    display: none;
-    bottom: 190px;
-    border-radius: 50%;
-    padding: 7px 10px;
-    opacity: 0.8;
-}
-
-.mobile-float-nav.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-
-.desktop-nav { 
-    display:flex; 
-    flex-wrap: wrap;
-}
-
-.mobile-float-nav {
-    display: none;
-}
-
-#nav-toggle-button {
-    display: none;
-}
-
-.center-circle {   
-    color: #fff;
-    font-size: 18px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 5;
-    position: absolute;
-}
-
-.nav-segment {
-    color: #fff;
-    font-size: 12px;
-    text-align: center;
-    width: 60px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #444;    
-    border-radius: 50%;
-    position: absolute;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.nav-segment:hover, .nav-segment:active {
-    background: #666;
-    z-index: 100;
-}
-
-
-/* Элементы меню и рецептов */
-.menu h2,
-.recipes h2,
-.contact h2 {
-    color: var(--accent-color);
-    font-size: 2.2em;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--accent-green);
-}
-
-.menu-item,
-.recipe-item {
-    border-left: 5px solid var(--accent-color);
-    margin-bottom: 15px;
-    padding: 15px;
-}
-
-.menu-item:hover,
-.recipe-item:hover {
-    background: #f0f0f0;
-}
-
-[data-theme="dark"] .menu-item:hover
- {
-    background: var(--button-background-dark);
-}
-
-[data-theme="dark"] .recipe-item:hover {
-    background: var(--button-background-dark);
-}
-
-/* Параграфы */
-p {
-    line-height: 1.6;
-}
-
-/* Уникальные стили */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Адаптивные стили */
-@media (max-width: 768px) {
-    .desktop-nav {
-        display: none; /* Скрыть для мобильной версии */
-    }
-    #nav-toggle-button {
-        display: block; /* Показать кнопку переключения для мобильной версии */
-    }
-    .mobile-float-nav {
-        bottom: 80px; /* Настроить позицию для мобильной версии */
-    }
-}
-
-@media (max-width: 480px) {
-    .menu-item,
-    .recipe-item {
-        padding: 10px;
-        font-size: 14px;
-    }
-}
-
-/* Fixed Position Styling */
-.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-}
-
-/* animation pizza */
-
-.pizza-banner {
-    position: relative;   
-    overflow: hidden; /* Ensures the spinning pizza stays within the section */ 
-    background: linear-gradient(to bottom, var(--italy-green), var(--italy-red));
-  }
-  
-  .cheese {
-    font-size: 2rem;
-    animation: cheese-spin 3s infinite linear;
-  }
-  
-  @keyframes cheese-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .cloud {
-    position: absolute;
-    font-size: 2.5rem;
-    opacity: 0.9;
-    animation: float 4s infinite ease-in-out;
-  }
-  
-  .tomato1 { top: 10%; left: 10%; animation-delay: 0s; }
-  .tomato2 { top: 20%; left: 80%; animation-delay: 1s; }
-  .tomato3 { top: 50%; left: 30%; animation-delay: 3s; }
-  .tomato4 { top: 60%; left: 70%; animation-delay: 4s; }
-  .mushroom1 { top: 30%; left: 50%; animation-delay: 2s; }
-  .mushroom2 { top: 40%; left: 20%; animation-delay: 5s; }
-  .mushroom3 { top: 80%; left: 10%; animation-delay: 6s; }
-  
-  @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0); }
-  }
-  
-  h1 {
-    font-size: 3rem;
-    color: #e63946; /* Tomato red */
-    margin-top: 20px;
-    animation: fadeIn 2s ease-in-out;
-  }
-
-  .pizza-banner h1{
-    position: absolute;
-    z-index: 100;
-  }
-  
-  p {
-    font-size: 1.5rem;
-    color: #1d3557; /* Deep navy blue */
-    margin-top: 10px;
-    animation: fadeIn 3s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  /* Spinning Pizza Background */
-  .pizza-background {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    transform: translate(-50%, -50%);
-    background-image: url('https://lh3.googleusercontent.com/pw/AP1GczMj4n3NL1Dwqe-5XcUqTf4h1N3gYnjT3hqwVxEZgLsUwqA6JAw-RWRhknZQzmH27oyDHoyLAf4cY-AEiJWaRlg1AH_3Z-QIrlK9Y0xZxwDoyb6Q4Q=w2400'); /* Replace with your pizza image URL */
-    background-size: cover;
-    border-radius: 50%;
-    animation: spin 10s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-  }
-  
-  /*!!!! Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.logo {
+  height: 40px;
 }
 
 
 /* Header Styling */
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('img/pizzafon.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('img/pizzafon.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
 }
 
 /* Header Content Styling */
 .header-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Белый полупрозрачный фон */
-    padding: 20px;
-    max-width: 500px;
-    border-radius: 8px;
-    transform: translateX(-100%);
-    opacity: 0;
-    animation: slideIn 1s ease forwards;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  max-width: 500px;
+  border-radius: 8px;
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: slideIn 1s ease forwards;
 }
 
 .header-title {
-    font-size: 2em;
-    font-weight: bold;
-    color: #f6b92a;
-    margin-bottom: 10px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #f6b92a;
+  margin-bottom: 10px;
 }
 
 .header-description {
-    font-size: 1em;
-    color: #333;
-    margin-bottom: 20px;
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .header-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-bottom: 20px;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .header-button:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
 /* Social Icons */
 .social-icons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .social-icon {
-    font-size: 0.9em;
-    color: #333;
-    text-decoration: none;
-    width: 30px;
-    height: 30px;
-    transition: all 0.3s ease; /* Smooth transition */
+  font-size: 0.9em;
+  color: #333;
+  text-decoration: none;
+  width: 30px;
+  height: 30px;
+  transition: all 0.3s ease; /* Smooth transition */
 }
 
-.social-icon:hover {
-    color: #ff6600; /* Change color on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
-    transform: scale(1.1); /* Slightly increase size */
+.social-icon img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.social-icon img:hover {
+  color: #ff6600; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.1); 
+  transition: box-shadow 0.3s ease, transform 0.3s ease; 
 }
 
 
 /* Slide-In Animation */
 @keyframes slideIn {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
 }
 
-
-/* Общие стили контейнера */
-#section3 {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-/* Сетка для элементов рецепта */
-.recipe-item {
-    display: grid;
-    grid-template-columns: 200px 1fr; /* Изображение и текст */
-    align-items: center;
-    gap: 20px;
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    animation: fadeIn 1s ease forwards;
-    opacity: 0; /* Стартовая скрытость */
-}
-
-/* Изображение слева, с анимацией */
-.recipe-item img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    border-radius: 8px;
-    animation: slideInLeft 1s ease forwards;
-    opacity: 0;
-}
-
-/* Текст справа */
-.recipe-item h3 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.recipe-item p {
-    font-size: 1rem;
-    color: #666;
-}
-
-/* Адаптивные стили для экрана до 768px */
-@media (max-width: 768px) {
-    .recipe-item {
-        grid-template-columns: 1fr; /* Изображение и текст по вертикали */
-        text-align: center;
-    }
-
-    .recipe-item img {
-        margin: 0 auto 15px auto;
-        width: 100%;
-        max-width: 300px;
-        animation: slideInTop 1s ease forwards;
-    }
-}
-
-/* Анимации для плавного появления */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes slideInLeft {
-    0% { transform: translateX(-30px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideInTop {
-    0% { transform: translateY(-20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-
-/* Основной стиль контейнера меню */
-#section2, #section1, #section4 {
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-} 
-
-/* Сетка для элементов меню */
-.menu-item {
-    display: grid;
-    grid-template-columns: 1fr 3fr; /* Оставляем место под иконку, если нужно */
-    align-items: center;
-    gap: 20px;
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    animation: fadeIn 1s ease forwards;
-    opacity: 0; /* Элементы скрыты по умолчанию */
-}
-
-/* Анимация для заголовков и текста */
-.menu-item h3 {
-    margin: 0;
-    font-size: 1.4rem;
-    animation: slideInRight 1s ease forwards;
-    opacity: 0;
-}
-
-.menu-item p {
-    font-size: 1rem;
-    color: #666;
-    animation: slideInRight 1.2s ease forwards; /* Задержка для плавности */
-    opacity: 0;
-}
-
-/* Адаптивные стили для мобильных экранов */
-@media (max-width: 768px) {
-    .menu-item {
-        grid-template-columns: 1fr; /* Ставит элементы по вертикали */
-        text-align: center;
-    }
-
-    .menu-item h3, .menu-item p {
-        animation: slideInTop 1s ease forwards;
-        text-align: center;
-    }
-}
-
-/* Анимации для появления элементов */
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes slideInRight {
-    0% { transform: translateX(30px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideInTop {
-    0% { transform: translateY(-20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-/* Кнопка "See More" в правом нижнем углу */
+/* "See More" button */
 .see-more-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #f6b92a;
-    color: #333;
-    font-size: 1em;
-    font-weight: bold;
-    border: none;
-    border-radius: 30px;
-    text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transform: translateY(100%);
-    animation: slideInBottom 1s ease forwards 0.5s; /* Задержка 0.5s для синхронизации */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+  position: absolute;
+  bottom: 150px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #f6b92a;
+  color: #333;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(100%);
+  animation: slideInBottom 1s ease forwards 0.5s; /* 0.5s delay for synchronization */
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .see-more-button:hover {
-    background-color: #e89d20;
-    transform: scale(1.1);
-}
-
-.go {
-    position: relative;
-    width: 100px;
+  background-color: #e89d20;
+  transform: scale(1.1);
 }
 
 
 @keyframes slideInBottom {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
-/* Contact Form Section */
+
+/* Floating button */
+.floating-button {
+  position: fixed;  
+  top:200px;
+  right: 20px;
+  background-color: #0b8a259c;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(77, 96, 54, 0.36);
+  display: none; 
+}
+
+.floating-button:hover {
+  background: linear-gradient(45deg, #32CD32, #228B22); /* Green gradient effect */
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.floating-button.show {
+  display: block; /* Show when required */
+}
+
+.header-content {
+  transition: opacity 0.3s ease;
+}
+
+.header-content.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#see-more-btn {
+  cursor: pointer;
+}
+
+#loading-spinner {
+  display: none; 
+}
+
+/* Footer styles */
+.footer {
+  background-color: #333;
+  color: #fff; 
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.about-section,
+.social-icons,
+.contact-section {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px;
+}
+
+.about-section h3,
+.contact-section h3 { 
+  margin-bottom: 10px;
+}
+
+.contact-toggle {
+  background-color: #444;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  border-radius: 7px;
+}
+
 .contact-form-section {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+  margin-top: 20px;
 }
 
-#contactForm {
-    display: flex;
-    flex-direction: column;
+.contact-form-section form {
+  display: flex;
+  flex-direction: column;
 }
 
-#contactForm input,
-#contactForm textarea {
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.contact-form-section label,
+.contact-form-section input,
+.contact-form-section textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 1rem;
 }
 
-#formResponse {
-    margin-top: 10px;
-    color: red;
+.contact-form-section button {
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
 }
 
-.cta-button,
-#submitBtn {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 10px;
+.contact-form-section button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
 }
 
-.cta-button,
-#submitBtn:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: not-allowed;
-    opacity: 0.6;
+@media screen and (max-width: 768px) {
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .social-icons {
+      justify-content: center;
+  }
 }
+
+
+
+/* Logo Section */
+.logo-section {
+  text-align: center;
+  flex: 1;
+  min-width: 250px;
+  padding: 10px;
+}
+
+.footer-logo {
+  width: 70px; 
+}
+
+.footer-link {
+  color: #00aaff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Social Icons Section Styling */
+.social-icons {
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Contact Info Styling - Placed Under Social Icons */
+.contact-info {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.contact-info p {
+  margin: 5px 0;
+}
+
+.contact-info a {
+  color: #2ae0a4; 
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+
+/* Scroll */
+#scroll-to-top-btn:hover {
+  background-color: #000;
+  color: white;
+}
+
+/* Progress in a circle using conic-gradient */
+.scroll-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#4caf50 0%, #4caf50 0%, #ddd 0%); 
+  transition: background 0.3s ease;
+}
+
+#scroll-to-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background-color: transparent;
+  display: none;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  display: none; /* The button is hidden by default */
+  justify-content: center;
+  align-items: center;
+  color: black;
+  box-shadow: 0 4px 6px rgba(77, 96, 54, 0.36);
+}
+
