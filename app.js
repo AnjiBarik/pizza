@@ -70,18 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
       progress.style.background = `conic-gradient(#4caf50 ${scrollPercent}%, #ddd ${scrollPercent}% 100%)`;
     }
 
-    // Show/hide a button depending on scrolling
+    // Show/hide the button depending on scrolling
     if (scrollTop > 100) {
-      scrollToTopButton.style.display = 'block';
+      scrollToTopButton.style.display = 'flex';
     } else {
       scrollToTopButton.style.display = 'none';
     }
-  }
-
-  // Creating a Progress Element
-  const progressElement = document.createElement('div');
-  progressElement.classList.add('scroll-progress');
-  scrollToTopButton.appendChild(progressElement);
+  } 
 
   // Scroll event handler
   window.addEventListener('scroll', updateScrollProgress);
@@ -89,9 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialization at start
   updateScrollProgress();
 });
-
-
-
 
 const setTheme = (theme) => {
   document.documentElement.setAttribute('data-theme', theme); 
@@ -278,7 +270,7 @@ function displayBooks(books, fieldState) {
       <div class="book-name">${book.title}</div>
       <div class="book-price">${bookPrice}</div>
       <div class="book-size-color">${sizeColorDisplay}</div> <!-- Size and color display added here -->
-      <button class="show-more-btn" onclick="showMoreInfo(${book.id})">Learn more</button>  
+      <button class="show-more-btn" onclick="showMoreInfo(${book.id})">Product Details</button>  
     `;
 
     bookList.appendChild(bookElement);
