@@ -357,6 +357,9 @@ body {
   color: var(--text);
   transition: background-color 0.5s ease, color 0.5s ease;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 #theme-toggle {
@@ -590,6 +593,7 @@ body {
   flex-wrap: wrap;
   border-radius: 15px;
   padding: 5px;
+  margin-top: auto;
 }
 
 .footer-content {
