@@ -732,7 +732,8 @@ body {
 /* Scroll */
 #scroll-to-top-btn {
   position: fixed;
-  bottom: 80px;
+  /* bottom: 80px; */
+  bottom: 150px;
   right: 20px;
   width: 60px;
   height: 60px;
