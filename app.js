@@ -155,7 +155,9 @@ async function fetchBooks() {
 
     if (!data.success) throw new Error(data.message || 'Error fetching combined data');
 
-    books = data.data.sheet1Data;
+    books = data.data.sheet1Data
+    ? data.data.sheet1Data.filter((book) => book && book.Visibility !== '0')
+    : [];
     fieldState = data.data.sheet2Data?.[0] || {};
     //console.log(books)
     //console.log(fieldState)

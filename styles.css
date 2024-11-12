@@ -1,16 +1,15 @@
-
-  .spinner {
+/* .spinner {
     position: fixed; 
     top: 50%; 
     left: 50%; 
-    transform: translate(-50%, -50%); /* Adjusts for the actual element dimensions */
+    transform: translate(-50%, -50%); 
     font-size: 40px;
   }
   
   .spinner::after {
     content: "😺";
     display: inline-block;
-    animation: tailWag 1s infinite linear; /* Smooth linear rotation */
+    animation: tailWag 1s infinite linear; 
   }
   
   @keyframes tailWag {
@@ -19,6 +18,15 @@
     50% { transform: rotate(-15deg); }
     75% { transform: rotate(15deg); }
     100% { transform: rotate(0deg); }
+  } */
+  
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
+    width: 100px; 
+    height: 100px; 
   }
   
     
