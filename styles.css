@@ -51,8 +51,34 @@
     padding: 5px;
   }
   
-  .shelf-element:hover {
+  /* .shelf-element:hover {
     transform: scale(1.01);
+  } */
+
+  .img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .book-size-color {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    color: black;
+    background-color: azure;
+    border-radius: 7px;
+    padding: 1px 7px;
+  }
+
+  .circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+    vertical-align: middle;
   }
   
   .img-container img {
@@ -232,7 +258,7 @@
   font-weight: bold;
   cursor: pointer;
   border-radius: 50%;
-  padding: 10px 15px;
+  padding: 10px 14px;
 }
 
 .close-fullscreen:hover {

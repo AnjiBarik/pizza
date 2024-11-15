@@ -194,21 +194,61 @@ async function fetchBooks() {
 // Helper function for rendering tags with default labels for size and color
 function renderTags(book, fieldState) {
   const tagFields = ['size', 'color', 'tags1', 'tags2', 'tags3', 'tags4', 'tags5', 'tags6', 'tags7', 'tags8'];
+  
+  // Create colorRGB object for color mappings
+  const colorRGB = fieldState.colorblock
+    ? fieldState.colorblock
+        .split(';')
+        .map(colorItem => colorItem.split(':'))
+        .reduce((acc, [colorName, rgb]) => ({ ...acc, [colorName.trim()]: rgb.trim().slice(1, -1) }), {})
+    : {};
+  
+  // Helper function to render specific tag rows
+  function renderTagRow(tagKey, selectedBook, fieldState) {
+    const selectedTag = selectedBook?.[tagKey] ?? ''; 
+    const fieldTag = fieldState?.[tagKey] ?? ''; 
+    let sectionField = null;
+    let sectionValue = selectedTag;
+
+    if (typeof fieldTag === 'string' && fieldTag.includes(';')) {
+      try {
+        const tagPairs = fieldTag.split(';').map(pair => pair.split('~').map(s => s.trim()));
+        const matchingPair = tagPairs.find(([sectionName]) => sectionName === selectedBook?.section);
+
+        if (matchingPair) {
+          sectionField = matchingPair[1]; 
+        }
+      } catch (error) {
+        console.error(`Error parsing tag ${tagKey}: ${error}`);
+      }
+    }
+
+    if (sectionField) {
+      return `<p><b>${sectionField}:</b> ${sectionValue}</p>`;
+    }
+    return `<p><b>${fieldTag || `Tag ${tagKey.slice(-1)}`}:</b> ${selectedTag}</p>`;
+  }
 
   return tagFields
     .filter(tagKey => book[tagKey]) // Only if the book has data for the tag
     .map(tagKey => {
-      // Set default labels for size and color if fieldState does not have them
-      const label = tagKey === 'size' 
-        ? (fieldState[tagKey] || 'Size') 
-        : tagKey === 'color' 
-        ? (fieldState[tagKey] || 'Color') 
-        : (fieldState[tagKey] || `Tag ${tagKey.slice(-1)}`);
+      if (['tags5', 'tags6', 'tags7', 'tags8'].includes(tagKey)) {
+        return renderTagRow(tagKey, book, fieldState);
+      }
+
+      let label = fieldState[tagKey] || (tagKey === 'size' ? 'Size' : tagKey === 'color' ? 'Color' : `Tag ${tagKey.slice(-1)}`);
       
+      if (tagKey === 'color' && colorRGB[book[tagKey]?.trim()]) {
+        return `<p><b>${label}:</b> ${book[tagKey]} 
+          <span class='circle' style='background-color: rgb(${colorRGB[book[tagKey]?.trim()]})'></span>
+        </p>`;
+      }
+
       return `<p><b>${label}:</b> ${book[tagKey]}</p>`;
     })
     .join('');
 }
+
 
 // Helper function to capitalize any word (used for general tags if needed)
 function capitalize(word) {
@@ -224,11 +264,11 @@ function displayBooks(books, fieldState) {
     bookElement.classList.add('shelf-element');
     bookElement.setAttribute('data-sorted', book.sorted || ''); // Set data-sorted attribute
     bookElement.setAttribute('data-id', book.id);
-    const bookPrice = book.price ? `${book.price} ${fieldState.payment || '$'}` : 'Цена не указана';
+    const bookPrice = book.price ? `${book.price} ${fieldState.payment || '$'}` : 'Price not specified';
 
     // Image processing
     const images = book.imageblock ? book.imageblock.split(',') : [];
-    let firstImage = book.image ? book.image : (images.length > 0 && images[0].trim() !== '' ? images[0].trim() : 'imageNotFound.png');
+    let firstImage = book.image ? book.image : (images.length > 0 && images[0].trim() !== '' ? images[0].trim() : 'img/imageNotFound.png');
     const bookId = book.id ? `<div class="book-id">ID: ${book.id}</div>` : '';
 
     // Rating Data Processing
@@ -266,13 +306,13 @@ function displayBooks(books, fieldState) {
     // HTML for each book card
     bookElement.innerHTML = `
      <div class="id-rating"> ${bookId}  ${ratingDisplay}</div>
-      <div class="img-container">
-        <img src="${firstImage}" alt="${book.title}" loading="lazy">
+      <div class="img-container">     
+       <img src="${firstImage}" alt="${book.title}" loading="lazy" onerror="this.onerror=null;this.src='img/imageNotFound.png';">  
+        ${sizeColorDisplay ? `<div class="book-size-color">${sizeColorDisplay}</div>` : ''}          
       </div>    
       <div class="book-name">${book.title}</div>
-      <div class="book-price">${bookPrice}</div>
-      <div class="book-size-color">${sizeColorDisplay}</div> <!-- Size and color display added here -->
-      <button class="show-more-btn" onclick="showMoreInfo(${book.id})">Product Details</button>  
+      <div class="book-price">${bookPrice}</div>     
+      <button class="show-more-btn" onclick="showMoreInfo(${book.id})">Learn more</button>  
     `;
 
     bookList.appendChild(bookElement);
@@ -282,9 +322,23 @@ function displayBooks(books, fieldState) {
 // Helper function for rendering only size and color tags
 function renderSizeColorTags(book, fieldState) {
   const tagFields = ['size', 'color'];
+  const colorRGB = fieldState.colorblock
+    ? fieldState.colorblock
+        .split(';')
+        .map(colorItem => colorItem.split(':'))
+        .reduce((acc, [colorName, rgb]) => ({ ...acc, [colorName.trim()]: rgb.trim().slice(1, -1) }), {})
+    : {};
+
   return tagFields
-    .filter(tagKey => book[tagKey]) // Only if the book has data for size or color
-    .map(tagKey => `<p><b>${fieldState[tagKey] || capitalize(tagKey)}:</b> ${book[tagKey]}</p>`)
+    .filter(tagKey => book[tagKey]) // Только если данные для размера или цвета существуют
+    .map(tagKey => {
+      if (tagKey === 'color' && book[tagKey] && colorRGB[book[tagKey].trim()]) {
+        return `<p><b>${fieldState[tagKey] || capitalize(tagKey)}</b> ${book[tagKey]} 
+          <span class='circle' style='background-color: rgb(${colorRGB[book[tagKey].trim()]})'></span>
+        </p>`;
+      }
+      return `<p><b>${fieldState[tagKey] || capitalize(tagKey)}</b> ${book[tagKey]}</p>`;
+    })
     .join('');
 }
 
@@ -461,20 +515,29 @@ window.showMoreInfo = function(bookId) {
   // Clear and populate the image gallery
   if (imageGallery) {
     imageGallery.innerHTML = '';
-
+  
     const images = book.imageblock ? book.imageblock.split(',') : [];
     images.forEach((image, index) => {
       const img = document.createElement('img');
       img.src = image.trim();
       img.alt = `Book Image ${index + 1}`;
       img.classList.add('image-option');
+      // Проверка загрузки изображения
+      img.onerror = function() {
+        this.onerror = null;
+        this.src = 'img/imageNotFound.png';
+      };
       img.onclick = () => changeImage(image.trim());
       imageGallery.appendChild(img);
     });
-
+  
     // Set the first image if available
     if (bookModalImg && images.length > 0) {
       bookModalImg.src = images[0].trim();
+      bookModalImg.onerror = function() {
+        this.onerror = null;
+        this.src = 'img/imageNotFound.png';
+      };
     }
   }
 
