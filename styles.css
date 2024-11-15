@@ -251,14 +251,14 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #fff;
+  /* background-color: #fff; */
   color: #333;
   border: none;
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 50%;
-  padding: 10px 14px;
+  border-radius: 7px;
+  padding: 10px 20px;
 }
 
 .close-fullscreen:hover {
