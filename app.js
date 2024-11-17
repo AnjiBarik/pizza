@@ -255,6 +255,170 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
+// Catalog
+document.addEventListener('DOMContentLoaded', () => {
+  const catalogButton = document.getElementById('catalog-button');
+  const catalogModal = document.getElementById('catalog-modal');
+  const closeCatalogModal = document.getElementById('close-catalog-modal');
+  const sectionList = document.getElementById('section-list');
+  const currentFilter = document.getElementById('current-filter');
+
+  let selectedSection = null;
+  let selectedPartition = null;
+  
+  catalogButton.addEventListener('click', () => {
+    renderSections();
+    catalogModal.style.display = 'block';
+  });
+  
+  closeCatalogModal.addEventListener('click', () => {
+    catalogModal.style.display = 'none';
+    updateCurrentFilterDisplay();
+  });
+  
+  function updateCurrentFilterDisplay() {
+    currentFilter.innerHTML = '';
+    const showAllLink = document.createElement('a');
+    showAllLink.textContent = 'Show all';
+    showAllLink.addEventListener('click', resetFilters);
+    currentFilter.appendChild(showAllLink);
+
+    if (selectedSection) {
+      const sectionLink = document.createElement('a');
+      sectionLink.textContent = selectedSection;
+      sectionLink.addEventListener('click', () => filterBooksBySection(selectedSection));
+      currentFilter.appendChild(document.createTextNode(' > '));
+      currentFilter.appendChild(sectionLink);
+    }
+
+    if (selectedPartition) {
+      const partitionLink = document.createElement('a');
+      partitionLink.textContent = selectedPartition;
+      partitionLink.addEventListener('click', () => filterBooks(selectedSection, selectedPartition));
+      currentFilter.appendChild(document.createTextNode(' > '));
+      currentFilter.appendChild(partitionLink);
+    }
+  }
+ 
+  function resetFilters() {
+    selectedSection = null;
+    selectedPartition = null;
+    displayBooks(books, fieldState);
+    catalogModal.style.display = 'none';
+    updateCurrentFilterDisplay();
+  }
+ 
+  function renderSections() {
+    sectionList.innerHTML = '';   
+    const showAllItem = document.createElement('li');
+    showAllItem.textContent = 'Show all';
+    showAllItem.classList.add('active');
+    showAllItem.addEventListener('click', resetFilters);
+    sectionList.appendChild(showAllItem);
+    
+    const uniqueSections = [...new Set(books.map(book => book.section))];
+
+    uniqueSections.forEach(section => {
+      const li = document.createElement('li');
+      li.innerHTML = `<div class="section-togle">${section} <span class="toggle">+</span></div>`;
+      li.classList.add('section-item');
+
+      // Expand hide subsections
+      const toggle = li.querySelector('.toggle');
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        togglePartitions(li, section);
+      });
+      
+      li.addEventListener('click', () => {
+        selectedSection = section;
+        selectedPartition = null;
+        filterBooksBySection(section);
+      });
+
+      sectionList.appendChild(li);
+    });
+  }
+
+  // Open or close subsections
+  function togglePartitions(liElement, section) {
+    const toggle = liElement.querySelector('.toggle');
+    const existingContainer = liElement.querySelector('.partition-container');
+
+    if (existingContainer) {
+      existingContainer.remove();
+      toggle.textContent = '+';
+    } else {
+      const partitionContainer = document.createElement('ul');
+      partitionContainer.classList.add('partition-container');
+
+      const partitions = [...new Set(
+        books.filter(book => book.section === section).map(book => book.partition)
+      )];
+
+      partitions.forEach(partition => {
+        const partitionLi = document.createElement('li');
+        partitionLi.textContent = partition || 'no subsection';
+        partitionLi.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedSection = section;
+          selectedPartition = partition || 'no subsection';
+          filterBooks(section, partition);
+        });
+
+        partitionContainer.appendChild(partitionLi);
+      });
+
+      liElement.appendChild(partitionContainer);
+      toggle.textContent = '-';
+    }
+  }
+
+  // Filter books by section
+  function filterBooksBySection(section) {
+    selectedSection = section;
+    selectedPartition = null;
+    const filteredBooks = books.filter(book => book.section === section);
+    displayBooks(filteredBooks, fieldState);
+    catalogModal.style.display = 'none';
+    updateCurrentFilterDisplay();
+  }
+
+  // Filter books by section and subsection
+  function filterBooks(section, partition) {
+    selectedSection = section;
+    selectedPartition = partition;
+    const filteredBooks = books.filter(book => {
+      return book.section === section && (partition === 'no subsection' ? !book.partition : book.partition === partition);
+    });
+    displayBooks(filteredBooks, fieldState);
+    catalogModal.style.display = 'none';
+    updateCurrentFilterDisplay();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const catalogModal = document.getElementById('catalog-modal');
+  const closeCatalogModal = document.getElementById('close-catalog-modal');
+
+  // Открыть модальное окно
+  document.getElementById('catalog-button').addEventListener('click', () => {
+    catalogModal.style.display = 'flex'; // Show modal window
+  });
+
+  //Close the modal window using the "x" button
+  closeCatalogModal.addEventListener('click', () => {
+    catalogModal.style.display = 'none';
+  });
+
+  // Close modal window when clicking outside of it
+  window.addEventListener('click', (e) => {
+    if (e.target === catalogModal) {
+      catalogModal.style.display = 'none';
+    }
+  });
+});
+
 
 function displayBooks(books, fieldState) {
   bookList.innerHTML = ''; // Clear previous book cards

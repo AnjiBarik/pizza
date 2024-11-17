@@ -50,6 +50,7 @@
 
   <!-- Sorting panel -->
   <section class="filters">
+    <button id="catalog-button" class="sort-button">📦Catalog</button>
     <input type="text" id="search-input" placeholder="🔍Search by ID or title" class="search-input" />
   <button id="clear-search-btn" class="clear-search-btn" onclick="clearSearch()">❌</button>
   <button class="sort-button" onclick="sortBy('new')"><img class="social-icon" src="img/new.png" alt="sort_by_new"></button>
@@ -58,6 +59,21 @@
     <button class="sort-button" onclick="sortByPrice('low')"><img class="social-icon" src="img/up_sort.png" alt="up_sort"></button>
     <button class="sort-button" onclick="sortByPrice('high')"><img class="social-icon" src="img/down_sort.png" alt="down_sort"></button>
   </section>
+  <div id="current-filter">
+    Show all
+  </div>
+  <!-- Modal window -->
+  <div id="catalog-modal" class="modal">
+    <div class="modal-content-section">
+      <span id="close-catalog-modal" class="close">&times;</span>
+      <h2>Catalog</h2>      
+      <ul id="section-list" class="section-list"></ul>
+      <div id="partition-list-container" class="partition-list-container">
+        
+        <ul id="partition-list" class="partition-list"></ul>
+      </div>
+    </div>
+  </div>
 
   <!-- Book Card Container -->
   <section id="book-list" class="book-list"></section>
