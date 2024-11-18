@@ -36,6 +36,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 20px;   
     padding: 5px;
   }
@@ -49,11 +50,7 @@
     overflow: hidden;
     transition: transform 0.3s ease;
     padding: 5px;
-  }
-  
-  /* .shelf-element:hover {
-    transform: scale(1.01);
-  } */
+  }    
 
   .img-container {
     display: flex;
@@ -61,15 +58,29 @@
     align-items: center;
     position: relative;
   }
+
+  .img-container .art-icon {
+    position: absolute;
+    top: 1px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: azure;
+  }
   
   .book-size-color {
     position: absolute;
-    top: 30px;
+    top: 40px;
     right: 10px;
     color: black;
     background-color: azure;
     border-radius: 7px;
     padding: 1px 7px;
+    opacity: 0.8
+  }
+
+  .book-size-color p {
+    text-align: left;
   }
 
   .circle {
@@ -101,6 +112,17 @@
     color: #007bff;
     font-size: 1.1em;
   }
+
+  .sale-price {
+    color: red;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: gray;
+  }  
   
   /* Filter styles */
   .filters {
@@ -121,7 +143,9 @@
     margin: 5px;
   }  
 
-  .sort-button:hover {
+  .sort-button:hover,
+  .sort-button:focus,
+  .sort-button:active {
     background: linear-gradient(45deg, #E6E6E6, #C0C0C0, #A8A8A8, #E6E6E6);
     color: white; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     transition: background 0.3s ease, box-shadow 0.3s ease;
@@ -137,7 +161,7 @@
 
   
   /* Modal Window Styles */
-.modal {
+  .modal {
     display: none; 
     position: fixed;
     z-index: 1000;
@@ -156,7 +180,7 @@
     border: 1px solid #888;
     width: 80%;
     max-width: 500px;
-    margin: 160px 0 5% auto;
+    margin: 10px 1px 5% auto;
     border-radius: 7px;
   }
 
@@ -191,11 +215,11 @@
     transition: background 0.3s ease;
   }
   
-.modal-content #book-modal-img {
-  height: 320px;
-  object-fit: cover;
-  width: 300px;
-  border-radius: 7px;
+  .modal-content #book-modal-img {
+   height: 320px;
+   object-fit: cover;
+   width: 300px;
+   border-radius: 7px;
     display: block;
     margin: 0 auto;
   }
@@ -249,21 +273,17 @@
 .close-fullscreen {
   position: absolute;
   top: 20px;
-  right: 20px;
-  background-color: #fff;
-  background-color: var(--background);
-  color: var(--text);
-  border: none;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 7px;
-  padding: 10px 15px;
+  right: 20px; 
+  color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.close-fullscreen:hover {
-  background-color: #ccc;
+.close-fullscreen:hover,
+.close-fullscreen:focus {
   color: black;
+  text-decoration: none;
 }
 
 /* Style for the full screen button */
@@ -313,7 +333,7 @@ p#book-tags {
 
 .search-input:focus {
   outline: none;
-  border-color: #007bff;
+  border: 2px solid black;
 }
 
 .clear-search-btn {    
@@ -321,7 +341,7 @@ p#book-tags {
     border-radius: 50%;
     cursor: pointer;
     margin: 5px;
-    padding: 5px 4px;
+    padding: 5px;
     border: none;
 }
 
@@ -329,14 +349,13 @@ p#book-tags {
   background-color: #ddd;
 }
 
-
 .rating-stars{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-
 }
+
 .star {
   font-size: 20px;
   color: #ccc; 
@@ -371,7 +390,7 @@ p#book-tags {
   --text: #333333;
   --button-bg: #008cba;
   --button-text: #ffffff;
-  --modal-bg: #fefefe; /* Add a variable for modal background */
+  --modal-bg: #fefefe; 
    --modal-text: #333333;
 }
 
@@ -580,7 +599,7 @@ body {
 /* Floating button */
 .floating-button {
   position: fixed;  
-  top:200px;
+  top:250px;
   right: 20px;
   background-color: #0b8a259c;
   color: white;
@@ -743,7 +762,8 @@ body {
 }
 
 .contact-info p {
-  margin: 5px 0;
+  margin: 5px;
+  text-align: left;
 }
 
 .contact-info a {
@@ -758,8 +778,7 @@ body {
 
 /* Scroll */
 #scroll-to-top-btn {
-  position: fixed;
-  /* bottom: 80px; */
+  position: fixed;  
   bottom: 150px;
   right: 20px;
   width: 60px;
@@ -811,14 +830,11 @@ body {
 .filters {
   position: sticky;
   top: 0; 
-  z-index: 1000; 
-  background-color: white; 
+  z-index: 1000;  
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  border-radius: 15px;
-  background-color: #333;
+  border-radius: 15px;  
+  background-color: var(--background);
 }
-
-
 
 .catalog-button {
   margin: 10px;
@@ -835,8 +851,8 @@ body {
 }
 
 .modal-content-section {
-  background-color: var(--background);
-  margin: 10px auto auto 5px;
+  background-color: var(--modal-bg);
+  margin: 270px auto auto 5px;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
@@ -876,6 +892,9 @@ body {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
+  padding: 5px 30px; 
+  text-align: left;
+  font-size: 1.1em;
 }
 
 .section-item {
@@ -892,6 +911,12 @@ body {
 .toggle {
   padding: 1px 20px;
   font-size: 18px;
+}
+
+.section-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 #section-list,
@@ -918,8 +943,9 @@ body {
   border-radius: 7px;
 }
 
-.partition-container {
-  padding-left: 20px; 
+.partition-container { 
+    width: 80%;
+    padding: 5px 100px;    
 }
 
 .partition-container li {

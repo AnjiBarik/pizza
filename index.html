@@ -50,7 +50,7 @@
 
   <!-- Sorting panel -->
   <section class="filters">
-    <button id="catalog-button" class="sort-button">📦Catalog</button>
+    <button id="catalog-button" class="sort-button"><img class="social-icon" src="img/category.png" alt="catalog">Categories</button>
     <input type="text" id="search-input" placeholder="🔍Search by ID or title" class="search-input" />
   <button id="clear-search-btn" class="clear-search-btn" onclick="clearSearch()">❌</button>
   <button class="sort-button" onclick="sortBy('new')"><img class="social-icon" src="img/new.png" alt="sort_by_new"></button>
@@ -60,13 +60,16 @@
     <button class="sort-button" onclick="sortByPrice('high')"><img class="social-icon" src="img/down_sort.png" alt="down_sort"></button>
   </section>
   <div id="current-filter">
-    Show all
+   
   </div>
   <!-- Modal window -->
   <div id="catalog-modal" class="modal">
     <div class="modal-content-section">
       <span id="close-catalog-modal" class="close">&times;</span>
-      <h2>Catalog</h2>      
+      <div class="book-list">
+      <img class="social-icon" src="img/category.png" alt="catalog">
+      <h2>Categories</h2>
+      </div>      
       <ul id="section-list" class="section-list"></ul>
       <div id="partition-list-container" class="partition-list-container">
         
@@ -91,7 +94,7 @@
       <h2 class="book-name id="book-title"></h2>
      
       <img id="book-modal-img" src="" alt="Book Image" />
-      <button id="fullscreen-btn" class="fullscreen-icon">🔍</button>
+      <div id="fullscreen-btn" class="fullscreen-icon">🔍</div>
      
     
       

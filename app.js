@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   seeMoreButton.addEventListener('click', (e) => {
     e.preventDefault();
 
-    loadingSpinner.style.display = 'block'; // Показываем спиннер
+    loadingSpinner.style.display = 'block'; 
 
     // Start loading data
     fetchBooks()
@@ -268,20 +268,32 @@ document.addEventListener('DOMContentLoaded', () => {
   
   catalogButton.addEventListener('click', () => {
     renderSections();
+    highlightActiveSelection();
     catalogModal.style.display = 'block';
   });
   
   closeCatalogModal.addEventListener('click', () => {
     catalogModal.style.display = 'none';
-    updateCurrentFilterDisplay();
   });
-  
+
+  window.addEventListener('click', (e) => {
+    if (e.target === catalogModal) {
+      catalogModal.style.display = 'none';
+    }
+  });
+
   function updateCurrentFilterDisplay() {
     currentFilter.innerHTML = '';
+
     const showAllLink = document.createElement('a');
     showAllLink.textContent = 'Show all';
     showAllLink.addEventListener('click', resetFilters);
     currentFilter.appendChild(showAllLink);
+
+    if (!selectedSection && !selectedPartition) {
+      currentFilter.style.display = 'block'; 
+      return;
+    }
 
     if (selectedSection) {
       const sectionLink = document.createElement('a');
@@ -298,8 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
       currentFilter.appendChild(document.createTextNode(' > '));
       currentFilter.appendChild(partitionLink);
     }
+
+    currentFilter.style.display = 'block'; 
   }
- 
+
   function resetFilters() {
     selectedSection = null;
     selectedPartition = null;
@@ -307,29 +321,35 @@ document.addEventListener('DOMContentLoaded', () => {
     catalogModal.style.display = 'none';
     updateCurrentFilterDisplay();
   }
- 
+
   function renderSections() {
     sectionList.innerHTML = '';   
     const showAllItem = document.createElement('li');
-    showAllItem.textContent = 'Show all';
-    showAllItem.classList.add('active');
+    showAllItem.textContent = ' Show all';
+    showAllItem.classList.add('section-item');
+    if (!selectedSection && !selectedPartition) {
+      showAllItem.classList.add('active'); 
+    }
     showAllItem.addEventListener('click', resetFilters);
     sectionList.appendChild(showAllItem);
-    
+
     const uniqueSections = [...new Set(books.map(book => book.section))];
 
     uniqueSections.forEach(section => {
       const li = document.createElement('li');
-      li.innerHTML = `<div class="section-togle">${section} <span class="toggle">+</span></div>`;
+      li.innerHTML = `<div class="section-toggle">${section} ${
+        hasPartitions(section) ? '<span class="toggle">+</span>' : ''
+      }</div>`;
       li.classList.add('section-item');
 
-      // Expand hide subsections
       const toggle = li.querySelector('.toggle');
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        togglePartitions(li, section);
-      });
-      
+      if (toggle) {
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePartitions(li, section);
+        });
+      }
+
       li.addEventListener('click', () => {
         selectedSection = section;
         selectedPartition = null;
@@ -340,10 +360,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Open or close subsections
+  function hasPartitions(section) {
+    return books.some(book => book.section === section && book.partition);
+  }
+
   function togglePartitions(liElement, section) {
     const toggle = liElement.querySelector('.toggle');
     const existingContainer = liElement.querySelector('.partition-container');
+
+    if (!toggle) return;
 
     if (existingContainer) {
       existingContainer.remove();
@@ -358,11 +383,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       partitions.forEach(partition => {
         const partitionLi = document.createElement('li');
-        partitionLi.textContent = partition || 'no subsection';
+        partitionLi.textContent = partition || 'Without subsection';
+        partitionLi.classList.add('partition-item');
+
+        if (section === selectedSection && partition === selectedPartition) {
+          partitionLi.classList.add('active'); 
+        }
+
         partitionLi.addEventListener('click', (e) => {
           e.stopPropagation();
           selectedSection = section;
-          selectedPartition = partition || 'no subsection';
+          selectedPartition = partition || 'Without subsection';
           filterBooks(section, partition);
         });
 
@@ -374,7 +405,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Filter books by section
+  function highlightActiveSelection() {
+    const sectionItems = document.querySelectorAll('.section-item');
+    const partitionItems = document.querySelectorAll('.partition-item');
+
+    sectionItems.forEach(item => item.classList.remove('active'));
+    partitionItems.forEach(item => item.classList.remove('active'));
+
+    if (!selectedSection && !selectedPartition) {
+      const showAllItem = sectionList.querySelector('.section-item:first-child');
+      if (showAllItem) showAllItem.classList.add('active');
+    }
+
+    if (selectedSection && !selectedPartition) {
+      sectionItems.forEach(item => {
+        if (item.textContent.trim().includes(selectedSection)) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    if (selectedPartition) {
+      partitionItems.forEach(item => {
+        if (item.textContent.trim() === selectedPartition) {
+          item.classList.add('active');
+        }
+      });
+      expandSectionIfPartitionSelected(); // Expand section if subsection is selected
+    }
+  }
+
+  function expandSectionIfPartitionSelected() {
+    const sectionItems = document.querySelectorAll('.section-item');
+
+    sectionItems.forEach(item => {
+      const sectionName = item.textContent.trim().split(' ')[0]; // Get section name
+      if (sectionName === selectedSection) {
+        const toggle = item.querySelector('.toggle');
+
+        if (toggle && toggle.textContent === '+') {
+          toggle.click(); // Expand section
+        }
+      }
+    });
+  }
+
   function filterBooksBySection(section) {
     selectedSection = section;
     selectedPartition = null;
@@ -384,40 +459,19 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCurrentFilterDisplay();
   }
 
-  // Filter books by section and subsection
   function filterBooks(section, partition) {
     selectedSection = section;
     selectedPartition = partition;
     const filteredBooks = books.filter(book => {
-      return book.section === section && (partition === 'no subsection' ? !book.partition : book.partition === partition);
+      return book.section === section && (partition === 'Without subsection' ? !book.partition : book.partition === partition);
     });
     displayBooks(filteredBooks, fieldState);
     catalogModal.style.display = 'none';
     updateCurrentFilterDisplay();
+    expandSectionIfPartitionSelected(); //Expand section
   }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const catalogModal = document.getElementById('catalog-modal');
-  const closeCatalogModal = document.getElementById('close-catalog-modal');
-
-  // Открыть модальное окно
-  document.getElementById('catalog-button').addEventListener('click', () => {
-    catalogModal.style.display = 'flex'; // Show modal window
-  });
-
-  //Close the modal window using the "x" button
-  closeCatalogModal.addEventListener('click', () => {
-    catalogModal.style.display = 'none';
-  });
-
-  // Close modal window when clicking outside of it
-  window.addEventListener('click', (e) => {
-    if (e.target === catalogModal) {
-      catalogModal.style.display = 'none';
-    }
-  });
-});
 
 
 function displayBooks(books, fieldState) {
@@ -428,7 +482,13 @@ function displayBooks(books, fieldState) {
     bookElement.classList.add('shelf-element');
     bookElement.setAttribute('data-sorted', book.sorted || ''); // Set data-sorted attribute
     bookElement.setAttribute('data-id', book.id);
-    const bookPrice = book.price ? `${book.price} ${fieldState.payment || '$'}` : 'Price not specified';
+    let bookPrice = book.price ? `${book.price} ${fieldState.payment || '$'}` : 'Price not specified';
+    if (book.saleprice && book.saleprice.trim() !== '') {
+      bookPrice = `       
+        <span class="sale-price">${book.price} ${fieldState.payment || '$'}</span>
+        <span class="original-price">${book.saleprice} ${fieldState.payment || '$'}</span>
+      `;
+    }
 
     // Image processing
     const images = book.imageblock ? book.imageblock.split(',') : [];
@@ -467,11 +527,23 @@ function displayBooks(books, fieldState) {
     // Render only size and color tags
     const sizeColorDisplay = renderSizeColorTags(book, fieldState);
 
+    // Badge icon handling
+    let badgeIcon = '';
+    if (book.sorted === 'new') {
+      badgeIcon = `<img src="img/new.png" class="art-icon" alt="New Cart">`;
+    } else if (book.sorted === 'sale') {
+      badgeIcon = `<img src="img/discont.png" class="art-icon" alt="Discount Cart">`;
+    } else if (book.sorted === 'popular') {
+      badgeIcon = `<img src="img/popular.png" class="art-icon" alt="Popular Cart">`;
+    }
+
     // HTML for each book card
     bookElement.innerHTML = `
      <div class="id-rating"> ${bookId}  ${ratingDisplay}</div>
-      <div class="img-container">     
-       <img src="${firstImage}" alt="${book.title}" loading="lazy" onerror="this.onerror=null;this.src='img/imageNotFound.png';">  
+      <div class="img-container"> 
+        ${badgeIcon}     
+       <img src="${firstImage}" alt="${book.title}" loading="lazy" onerror="this.onerror=null;this.src='img/imageNotFound.png';">
+        
         ${sizeColorDisplay ? `<div class="book-size-color">${sizeColorDisplay}</div>` : ''}          
       </div>    
       <div class="book-name">${book.title}</div>
@@ -686,7 +758,7 @@ window.showMoreInfo = function(bookId) {
       img.src = image.trim();
       img.alt = `Book Image ${index + 1}`;
       img.classList.add('image-option');
-      // Проверка загрузки изображения
+      //Checking image loading
       img.onerror = function() {
         this.onerror = null;
         this.src = 'img/imageNotFound.png';
@@ -734,7 +806,7 @@ if (fullscreenBtn) {
       fullscreenImage.classList.add('fullscreen-image');
       
       // Add a close button for exiting fullscreen mode
-      const closeButton = document.createElement('button');
+      const closeButton = document.createElement('div');
       closeButton.id = 'close-fullscreen-btn';
       closeButton.classList.add('close-fullscreen');
       closeButton.innerHTML = '&times;';
