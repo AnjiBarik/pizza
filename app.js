@@ -714,8 +714,13 @@ window.showMoreInfo = function(bookId) {
   if (bookID) bookID.textContent = `ID: ${bookId}`;
   if (bookTitleElem) bookTitleElem.textContent = book.title;
   if (bookDescriptionElem) bookDescriptionElem.textContent = book.description || 'No description';
-  if (bookAuthorElem) bookAuthorElem.textContent = `Автор: ${book.author || 'Unknown'}`;
-  if (bookPriceElem) bookPriceElem.textContent = `Цена: ${book.price ? `${book.price} ${fieldState.payment}` : 'Price not specified'}`;
+  if (bookAuthorElem) bookAuthorElem.textContent = `Author: ${book.author || 'Unknown'}`;
+  //if (bookPriceElem) bookPriceElem.textContent = `Price: ${book.price ? `${book.price} ${fieldState.payment}` : 'Price not specified'}`;
+  if (bookPriceElem) { if (book.saleprice && book.saleprice.trim() !== '')
+     { bookPriceElem.innerHTML = `
+      <span class="sale-price">${book.price} ${fieldState.payment || '$'}</span>
+      <span class="original-price">${book.saleprice} ${fieldState.payment || '$'}</span> `; }
+  else { bookPriceElem.textContent = `Price: ${book.price ? `${book.price} ${fieldState.payment}` : 'Price not specified'}`; } }
   if (bookTagsElem) bookTagsElem.innerHTML = renderTags(book, fieldState);
 
   // Rating Data Processing
