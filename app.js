@@ -1,4 +1,5 @@
 const URLAPI = 'https://script.google.com/macros/s/AKfycbwVXp6_F_VthBjLh0BW22W4Dvw_lfl90lWTQKjt6ltkqxPvlfUjW8QBru-nTLjF97Se/exec';
+//const URLAPI = 'https://script.google.com/macros/s/AKfycbxGXnRt_9VFqY9K8-j3Jdx7uMOfbYxAg6ug5mt7Uim5i_wuDUg4I1J0iLpblKB9xp0zIQ/exec';
 let books = []; // Global variable
 let fieldState = {};
 let aggregatedData = [];
@@ -490,9 +491,18 @@ function displayBooks(books, fieldState) {
       `;
     }
 
-    // Image processing
-    const images = book.imageblock ? book.imageblock.split(',') : [];
-    let firstImage = book.image ? book.image : (images.length > 0 && images[0].trim() !== '' ? images[0].trim() : 'img/imageNotFound.png');
+    // Image processing    
+  let firstImage = 
+  (book.imagepublic && typeof book.imagepublic === 'string' && book.imagepublic.trim() !== '')
+    ? `img/publik/${book.imagepublic.trim()}`
+  : (book.imageblockpublic && typeof book.imageblockpublic === 'string' && book.imageblockpublic.trim() !== '')
+    ? `img/publik/${book.imageblockpublic.split(',').map(img => img.trim()).find(img => img !== '') || ''}`
+  : (book.image && typeof book.image === 'string' && book.image.trim() !== '')
+    ? book.image.trim()
+  : (book.imageblock && typeof book.imageblock === 'string' && book.imageblock.trim() !== '')
+    ? book.imageblock.split(',').map(img => img.trim()).find(img => img !== '') || ''
+  : 'img/imageNotFound.png';
+
     const bookId = book.id ? `<div class="book-id">ID: ${book.id}</div>` : '';
 
     // Rating Data Processing
@@ -629,7 +639,6 @@ function extractPrice(priceText) {
 }
 
 
-
 // debounce function
 function debounce(func, delay) {
   let timeout;
@@ -639,10 +648,12 @@ function debounce(func, delay) {
   };
 }
 
-// Search function
+
+
 function searchBooks() {
   const searchQuery = document.getElementById('search-input').value.toLowerCase();
   const books = Array.from(bookList.children); 
+  let resultsFound = false;  // Variable to track if any books match the search
 
   books.forEach(bookElement => {
     const bookTitle = bookElement.querySelector('.book-name').textContent.toLowerCase();
@@ -650,10 +661,19 @@ function searchBooks() {
     
     if (bookTitle.includes(searchQuery) || (bookId && bookId.includes(searchQuery))) {
       bookElement.style.display = 'block'; 
+      resultsFound = true; // If there's a match, set resultsFound to true
     } else {
       bookElement.style.display = 'none'; 
     }
   });
+
+  // Show the "Oops, nothing found" message if no books match the search
+  const noResultsMessage = document.getElementById('no-results-message');
+  if (!resultsFound) {
+    noResultsMessage.style.display = 'block';
+  } else {
+    noResultsMessage.style.display = 'none';
+  }
 }
 
 // Event handler for search field with debounce
@@ -661,13 +681,16 @@ document.getElementById('search-input').addEventListener('input', debounce(searc
 
 // Function to reset search and display all books
 function clearSearch() {
- 
   document.getElementById('search-input').value = '';  
- 
+  
   const books = Array.from(bookList.children);
   books.forEach(bookElement => {
     bookElement.style.display = 'block';
   });
+
+  // Hide the "Oops" message when the search is cleared
+  const noResultsMessage = document.getElementById('no-results-message');
+  noResultsMessage.style.display = 'none';
 }
 
 
@@ -755,11 +778,22 @@ window.showMoreInfo = function(bookId) {
 
   // Clear and populate the image gallery
   if (imageGallery) {
-    imageGallery.innerHTML = '';
+    imageGallery.innerHTML = '';    
   
-    const images = book.imageblock ? book.imageblock.split(',') : [];
+const images = 
+(book.imageblockpublic && typeof book.imageblockpublic === 'string' && book.imageblockpublic.trim() !== '')
+    ? book.imageblockpublic.split(',')
+        .map(img => img.trim())
+        .filter(img => img !== '')
+        .map(img => `img/publik/${img}`)
+: (book.imageblock && typeof book.imageblock === 'string' && book.imageblock.trim() !== '')
+    ? book.imageblock.split(',')
+        .map(img => img.trim())
+        .filter(img => img !== '')
+: [];
+
     images.forEach((image, index) => {
-      const img = document.createElement('img');
+      const img = document.createElement('img');     
       img.src = image.trim();
       img.alt = `Book Image ${index + 1}`;
       img.classList.add('image-option');

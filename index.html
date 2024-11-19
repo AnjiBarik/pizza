@@ -20,7 +20,7 @@
   </div>
 </header>
 
-<section class="header" id="main-header">
+<section class="header" id="main-header">  
   
     <div class="banner">
       <img src="img/ciz.png" class="item" alt="Cheese">
@@ -28,6 +28,13 @@
       <img src="img/perez.png" class="item" alt="Pepper">
       <img src="img/mushroom.png" class="item" alt="Mushroom">
     </div>  
+
+    <div class="video-container" id="video-container">
+      <video id="background-video" autoplay loop muted>
+        <source src="img/baner.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>   
   
   <div class="header-content">
       <h3>Delizia Pizza</h3>        
@@ -45,6 +52,7 @@
           <a href="#" class="social-icon"><img src="img/you.png" alt="youtube"></a>
       </div>
   </div> 
+
   <a href="#" id="see-more-btn" class="see-more-button">🛒View catalog</a>       
 </section>
 
@@ -67,8 +75,8 @@
     <button class="sort-button" onclick="sortByPrice('low')"><img class="social-icon" src="img/up_sort.png" alt="up_sort"></button>
     <button class="sort-button" onclick="sortByPrice('high')"><img class="social-icon" src="img/down_sort.png" alt="down_sort"></button>
   </section>
-  <div id="current-filter">
-   
+  <div id="no-results-message" style="display: none;">Oops, nothing found. Try again.</div>
+  <div id="current-filter">    
   </div>
   <!-- Modal window -->
   <div id="catalog-modal" class="modal">
