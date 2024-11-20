@@ -900,7 +900,7 @@ body {
 
 .modal-content-section {
   background-color: var(--modal-bg);
-  margin: 270px auto auto 5px;
+  margin: 20px auto auto 5px;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
