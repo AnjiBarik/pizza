@@ -309,7 +309,7 @@ function updateCurrentFilterDisplay() {
     const sectionLink = document.createElement('a');
     sectionLink.textContent = selectedSection;
     sectionLink.addEventListener('click', () => filterBooksBySection(selectedSection));
-    currentFilter.appendChild(document.createTextNode(' > '));
+    currentFilter.appendChild(document.createTextNode(' / '));
     currentFilter.appendChild(sectionLink);
   }
 
@@ -317,7 +317,7 @@ function updateCurrentFilterDisplay() {
     const partitionLink = document.createElement('a');
     partitionLink.textContent = selectedPartition;
     partitionLink.addEventListener('click', () => filterBooks(selectedSection, selectedPartition));
-    currentFilter.appendChild(document.createTextNode(' > '));
+    currentFilter.appendChild(document.createTextNode(' / '));
     currentFilter.appendChild(partitionLink);
   }
 
