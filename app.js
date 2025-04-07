@@ -1,6 +1,6 @@
 const URLAPI = 'https://script.google.com/macros/s/AKfycbwVXp6_F_VthBjLh0BW22W4Dvw_lfl90lWTQKjt6ltkqxPvlfUjW8QBru-nTLjF97Se/exec';
 //const URLAPI = 'https://script.google.com/macros/s/AKfycbxGXnRt_9VFqY9K8-j3Jdx7uMOfbYxAg6ug5mt7Uim5i_wuDUg4I1J0iLpblKB9xp0zIQ/exec';
-const globalURL = 'https://anjibarik.github.io/do/#/BookList/3';
+const globalURL = 'https://anjibarik.github.io/do/#/LandingPage/3';
 let books = []; // Global variable
 let fieldState = {};
 let aggregatedData = [];
